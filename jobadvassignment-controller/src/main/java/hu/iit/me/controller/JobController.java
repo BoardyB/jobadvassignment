@@ -17,7 +17,7 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Collection<Job> add() {
         return jobService.listAllJobs();
     }
