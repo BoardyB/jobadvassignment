@@ -6,9 +6,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 
+@RestController
 @RequestMapping("/applicant")
 public class ApplicantController {
 
@@ -19,7 +21,6 @@ public class ApplicantController {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
     public Collection<Applicant> getAllApplicants() {
         return this.applicantService.listAllApplicants();
     }
