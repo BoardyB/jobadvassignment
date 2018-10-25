@@ -2,21 +2,16 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>job-adv-assignment</artifactId>
+        <groupId>hu.iit.me</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>hu.iit.me</groupId>
-    <artifactId>job-adv-assignment</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>jobadvassignment-core</module>
-        <module>jobadvassignment-controller</module>
-        <module>jobadvassignment-service</module>
-        <module>jobadvassignment-web</module>
-        <module>jobadvassignment-dao</module>
-    </modules>
+    <artifactId>jobadvassignment-dao</artifactId>
 
-    <name>job-adv-assignment</name>
+    <name>jobadvassignment-dao</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,18 +21,16 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>5.0.9.RELEASE</version>
+            <groupId>hu.iit.me</groupId>
+            <artifactId>jobadvassignment-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
-            <groupId>com.fasterxml.jackson</groupId>
-            <artifactId>jackson-base</artifactId>
-            <version>2.9.7</version>
-            <type>pom</type>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>

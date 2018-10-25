@@ -3,7 +3,9 @@ package hu.iit.me.controller;
 import hu.iit.me.model.Job;
 import hu.iit.me.service.JobService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 
