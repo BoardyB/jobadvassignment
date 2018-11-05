@@ -1,9 +1,15 @@
 package hu.iit.me.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "job")
 public class Job {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String name;
     private String description;

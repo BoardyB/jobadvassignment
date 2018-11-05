@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan({"web.config", "hu.iit.me.controller"})
+@ComponentScan({"hu.iit.me.dao", "web.config", "hu.iit.me.controller"})
 public class JobAdvertisementApplicationContext {
 
     private JobService jobService;

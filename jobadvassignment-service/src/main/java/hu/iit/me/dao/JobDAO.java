@@ -1,7 +1,12 @@
 package hu.iit.me.dao;
 
+import java.util.List;
+
+import hu.iit.me.model.Job;
+
 public interface JobDAO {
 
-//    TODO: Add database operations here.
+    List<Job> findAll();
+    List<Job> findByField(String fieldName, String fieldValue);
 
 }
