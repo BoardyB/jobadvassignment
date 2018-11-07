@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+@EnableWebMvc
 @Configuration
-@ComponentScan({"hu.iit.me.dao", "web.config", "hu.iit.me.controller"})
+@ComponentScan({"web.config", "hu.iit.me.controller", "hu.iit.me.dao", "hu.iit.me.service"})
 public class JobAdvertisementApplicationContext {
 
     private JobService jobService;

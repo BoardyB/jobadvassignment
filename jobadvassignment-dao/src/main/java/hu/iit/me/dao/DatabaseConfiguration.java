@@ -21,11 +21,6 @@ public class DatabaseConfiguration {
     private static Logger logger = LoggerFactory.getLogger(DatabaseConfiguration.class);
 
     @Bean
-    public ApplicantDAO applicantDAO() {
-        return new ApplicantDAOImpl(sessionFactory().getObject());
-    }
-
-    @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
@@ -40,8 +35,6 @@ public class DatabaseConfiguration {
                 .generateUniqueName(false)
                 .setName("testdb")
                 .setType(EmbeddedDatabaseType.H2)
-                .addScript("sql/schema.sql")
-                .setScriptEncoding("UTF-8")
                 .ignoreFailedDrops(true)
                 .build();
     }

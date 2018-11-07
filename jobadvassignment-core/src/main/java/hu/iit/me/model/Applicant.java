@@ -4,19 +4,26 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Applicant", schema = "test_schema")
+@Table(name = "Applicant")
 public class Applicant {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+    @Column
     private String foreName;
+    @Column
     private String surName;
+    @Column
     private Date birthDate;
+    @Column
     private String phoneNumber;
+    @Column
     private String taxId;
+    @Column
     private Gender gender;
+    @Column
     private String address;
 
     public Applicant() {

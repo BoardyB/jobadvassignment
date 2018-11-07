@@ -8,4 +8,8 @@ public interface ApplicantService {
 
     Collection<Applicant> listAllApplicants();
 
+    Collection<Applicant> findBy(String fieldName, String fieldValue);
+
+    void save(Applicant applicant);
+
 }

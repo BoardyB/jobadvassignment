@@ -4,18 +4,24 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "job")
+@Table(name = "Job")
 public class Job {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+    @Column
     private String name;
+    @Column
     private String description;
+    @Column
     private Date uploadDate;
+    @Column
     private String companyName;
+    @Column
     private String contact;
+    @Column
     private Integer wage;
 
     public Job() {

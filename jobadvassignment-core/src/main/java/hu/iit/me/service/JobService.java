@@ -8,4 +8,7 @@ public interface JobService {
 
     Collection<Job> listAllJobs();
 
+    Collection<Job> findBy(String fieldName, String fieldValue);
+
+    void save(Job job);
 }
