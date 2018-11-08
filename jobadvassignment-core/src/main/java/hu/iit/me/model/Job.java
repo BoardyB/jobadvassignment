@@ -23,11 +23,13 @@ public class Job {
     private String contact;
     @Column
     private Integer wage;
+    @Column
+    private JobType type;
 
     public Job() {
     }
 
-    public Job(String id, String name, String description, Date uploadDate, String companyName, String contact, Integer wage) {
+    public Job(String id, String name, String description, Date uploadDate, String companyName, String contact, Integer wage, JobType type) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -35,6 +37,7 @@ public class Job {
         this.companyName = companyName;
         this.contact = contact;
         this.wage = wage;
+        this.type = type;
     }
 
     public String getId() {
@@ -93,16 +96,25 @@ public class Job {
         this.wage = wage;
     }
 
+    public JobType getType() {
+        return type;
+    }
+
+    public void setType(JobType type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Job{");
-        sb.append("id=").append(id).append('\'');
+        sb.append("id='").append(id).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", uploadDate=").append(uploadDate);
         sb.append(", companyName='").append(companyName).append('\'');
         sb.append(", contact='").append(contact).append('\'');
         sb.append(", wage=").append(wage);
+        sb.append(", type=").append(type);
         sb.append('}');
         return sb.toString();
     }

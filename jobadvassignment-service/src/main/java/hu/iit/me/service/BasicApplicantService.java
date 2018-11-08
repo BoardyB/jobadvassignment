@@ -2,6 +2,7 @@ package hu.iit.me.service;
 
 import hu.iit.me.dao.ApplicantDAO;
 import hu.iit.me.model.Applicant;
+import hu.iit.me.util.SearchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,8 @@ public class BasicApplicantService implements ApplicantService {
     }
 
     @Override
-    public Collection<Applicant> findBy(String fieldName, String fieldValue) {
-        return applicantDAO.findByField(fieldName, fieldValue);
+    public Collection<Applicant> findBy(SearchRequest request) {
+        return applicantDAO.findByField(request.getFilters());
     }
 
 

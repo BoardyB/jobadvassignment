@@ -2,6 +2,7 @@ package hu.iit.me.controller;
 
 import hu.iit.me.model.Applicant;
 import hu.iit.me.service.ApplicantService;
+import hu.iit.me.util.SearchRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,13 +23,13 @@ public class ApplicantController {
         return ResponseEntity.ok(this.applicantService.listAllApplicants());
     }
 
-    @GetMapping(value = "/by")
-    public ResponseEntity getApplicantsBy(@RequestParam String fieldName, @RequestParam String fieldValue) {
+    @PostMapping(value = "/by")
+    public ResponseEntity getApplicantsBy(@RequestBody SearchRequest request) {
         try {
-            Collection<Applicant> applicants = this.applicantService.findBy(fieldName, fieldValue);
+            Collection<Applicant> applicants = this.applicantService.findBy(request);
             return ResponseEntity.ok(applicants);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body("Property [" + fieldName + "] does not exist on entity [" + Applicant.class.getSimpleName() + "].");
+            return ResponseEntity.badRequest().body("Search request " + request.toString() + " does not have a valid field name.");
         }
     }
 
