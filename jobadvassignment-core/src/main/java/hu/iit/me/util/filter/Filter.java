@@ -1,26 +1,28 @@
-package hu.iit.me.util;
+package hu.iit.me.util.filter;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = NumberFilter.class, name = "NUMBER"),
         @JsonSubTypes.Type(value = DateFilter.class, name = "DATE"),
-        @JsonSubTypes.Type(value = Filter.class, name = "EXACTMATCH"),
-        @JsonSubTypes.Type(value = Filter.class, name = "PARTIALMATCH")
+        @JsonSubTypes.Type(value = ExactMatchFilter.class, name = "EXACTMATCH"),
+        @JsonSubTypes.Type(value = PartialMatchFilter.class, name = "PARTIALMATCH")
 })
-public class Filter {
+public abstract class Filter {
 
     private String fieldName;
     private Object fieldValue;
-    private FilterType type;
 
     public Filter() {
     }
@@ -56,21 +58,15 @@ public class Filter {
         this.fieldValue = fieldValue;
     }
 
-    public FilterType getType() {
-        return type;
-    }
-
-    public void setType(FilterType type) {
-        this.type = type;
-    }
-
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Filter{");
         sb.append("fieldName='").append(fieldName).append('\'');
         sb.append(", fieldValue=").append(fieldValue);
-        sb.append(", type=").append(type);
         sb.append('}');
         return sb.toString();
     }
+
+    public abstract List<Predicate> createPredicates(CriteriaBuilder criteriaBuilder, Root root);
+
 }

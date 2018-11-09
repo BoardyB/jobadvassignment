@@ -1,7 +1,9 @@
 package hu.iit.me.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Applicant")
@@ -16,7 +18,8 @@ public class Applicant {
     @Column
     private String surName;
     @Column
-    private Date birthDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate birthDate;
     @Column
     private String phoneNumber;
     @Column
@@ -29,7 +32,7 @@ public class Applicant {
     public Applicant() {
     }
 
-    public Applicant(String id, String foreName, String surName, Date birthDate, String phoneNumber, String taxId, Gender gender, String address) {
+    public Applicant(String id, String foreName, String surName, LocalDate birthDate, String phoneNumber, String taxId, Gender gender, String address) {
         this.id = id;
         this.foreName = foreName;
         this.surName = surName;
@@ -64,11 +67,11 @@ public class Applicant {
         this.surName = surName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

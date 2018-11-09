@@ -21,7 +21,7 @@ public class BasicApplicantService implements ApplicantService {
 
     @Override
     public Collection<Applicant> findBy(SearchRequest request) {
-        return applicantDAO.findByField(request.getFilters());
+        return applicantDAO.findBy(request.getFilters());
     }
 
 

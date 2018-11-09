@@ -1,5 +1,7 @@
 package hu.iit.me.util;
 
+import hu.iit.me.util.filter.Filter;
+
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
