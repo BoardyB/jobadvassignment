@@ -1,11 +1,13 @@
 package hu.iit.me.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "Job")
-public class Job {
+public class Job extends PersistableEntity {
 
     @Id
     @Column(name = "id")
@@ -16,6 +18,7 @@ public class Job {
     @Column
     private String description;
     @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date uploadDate;
     @Column
     private String companyName;
@@ -23,6 +26,8 @@ public class Job {
     private String contact;
     @Column
     private Integer wage;
+//    TODO: enum filtering is not working.
+    @Enumerated(EnumType.STRING)
     @Column
     private JobType type;
 

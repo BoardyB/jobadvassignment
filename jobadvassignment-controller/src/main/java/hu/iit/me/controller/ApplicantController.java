@@ -29,7 +29,7 @@ public class ApplicantController {
             Collection<Applicant> applicants = this.applicantService.findBy(request);
             return ResponseEntity.ok(applicants);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body("Search request " + request.toString() + " does not have a valid field name.");
+            return ResponseEntity.badRequest().body("Search request filters are no valid." + request.toString());
         }
     }
 

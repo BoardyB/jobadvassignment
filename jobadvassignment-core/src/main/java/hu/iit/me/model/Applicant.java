@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "Applicant")
-public class Applicant {
+public class Applicant extends PersistableEntity {
 
     @Id
     @Column(name = "id")
@@ -24,6 +24,7 @@ public class Applicant {
     private String phoneNumber;
     @Column
     private String taxId;
+    @Enumerated(EnumType.STRING)
     @Column
     private Gender gender;
     @Column

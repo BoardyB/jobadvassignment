@@ -2,6 +2,7 @@ package hu.iit.me.service;
 
 import hu.iit.me.dao.JobDAO;
 import hu.iit.me.model.Job;
+import hu.iit.me.util.SearchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,8 @@ public class BasicJobService implements JobService {
 
 
     @Override
-    public Collection<Job> findBy(String fieldName, String fieldValue) {
-        return jobDAO.findByField(fieldName, fieldValue);
+    public Collection<Job> findBy(SearchRequest request) {
+        return jobDAO.findBy(request.getFilters());
     }
 
 

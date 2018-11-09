@@ -2,6 +2,7 @@ package hu.iit.me.controller;
 
 import hu.iit.me.model.Job;
 import hu.iit.me.service.JobService;
+import hu.iit.me.util.SearchRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +24,13 @@ public class JobController {
         return jobService.listAllJobs();
     }
 
-    @GetMapping(value = "/by")
-    public ResponseEntity getApplicantsBy(@RequestParam String fieldName, @RequestParam String fieldValue) {
+    @PostMapping(value = "/by")
+    public ResponseEntity getApplicantsBy(@RequestBody SearchRequest request) {
         try {
-            Collection<Job> jobs = this.jobService.findBy(fieldName, fieldValue);
+            Collection<Job> jobs = this.jobService.findBy(request);
             return ResponseEntity.ok(jobs);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body("Property [" + fieldName + "] does not exist on entity [" + Job.class.getSimpleName() + "].");
+            return ResponseEntity.badRequest().body("Search request filters are no valid." + request.toString());
         }
     }
 
