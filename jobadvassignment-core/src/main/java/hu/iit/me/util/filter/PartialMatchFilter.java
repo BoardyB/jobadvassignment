@@ -14,8 +14,9 @@ public class PartialMatchFilter extends Filter {
     @Override
     public List<Predicate> createPredicates(CriteriaBuilder criteriaBuilder, Root root) {
         Path path = root.get(this.getFieldName());
-        Predicate predicate = criteriaBuilder.like(path, "%" + this.getValuesAsStringList().get(0) + "%");
-        return newArrayList(predicate);
+        return path.getJavaType().isEnum() ?
+                newArrayList(criteriaBuilder.like(path.as(String.class), "%" + this.getValuesAsStringList().get(0) + "%")) :
+                newArrayList(criteriaBuilder.like(path, "%" + this.getValuesAsStringList().get(0) + "%"));
     }
 
 }

@@ -28,8 +28,8 @@ public class ApplicantController {
         try {
             Collection<Applicant> applicants = this.applicantService.findBy(request);
             return ResponseEntity.ok(applicants);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body("Search request filters are no valid." + request.toString());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Search request filters are not valid." + request.toString());
         }
     }
 

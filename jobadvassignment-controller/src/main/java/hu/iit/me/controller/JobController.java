@@ -29,8 +29,8 @@ public class JobController {
         try {
             Collection<Job> jobs = this.jobService.findBy(request);
             return ResponseEntity.ok(jobs);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body("Search request filters are no valid." + request.toString());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Search request filters are not valid." + request.toString());
         }
     }
 

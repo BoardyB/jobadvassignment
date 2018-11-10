@@ -3,7 +3,7 @@ package hu.iit.me.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Job")
@@ -19,7 +19,7 @@ public class Job extends PersistableEntity {
     private String description;
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date uploadDate;
+    private LocalDate uploadDate;
     @Column
     private String companyName;
     @Column
@@ -34,7 +34,7 @@ public class Job extends PersistableEntity {
     public Job() {
     }
 
-    public Job(String id, String name, String description, Date uploadDate, String companyName, String contact, Integer wage, JobType type) {
+    public Job(String id, String name, String description, LocalDate uploadDate, String companyName, String contact, Integer wage, JobType type) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -69,11 +69,11 @@ public class Job extends PersistableEntity {
         this.description = description;
     }
 
-    public Date getUploadDate() {
+    public LocalDate getUploadDate() {
         return uploadDate;
     }
 
-    public void setUploadDate(Date uploadDate) {
+    public void setUploadDate(LocalDate uploadDate) {
         this.uploadDate = uploadDate;
     }
 

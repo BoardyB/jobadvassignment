@@ -28,6 +28,7 @@ public class AbstractDAOImpl<T extends PersistableEntity> {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @SuppressWarnings("unchecked")
     @Transactional
     public List<T> findAll() {
         logger.debug("Querying all stored entities...");
@@ -45,13 +46,8 @@ public class AbstractDAOImpl<T extends PersistableEntity> {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<T> query = criteriaBuilder.createQuery((Class<T>) type.getRawType());
         Root<T> root = query.from((Class<T>) type.getRawType());
-        query.select(root);
         List<Predicate> predicates = createPredicatesFromFilters(filters, criteriaBuilder, root);
-        try {
-            query.where(predicates.toArray(new Predicate[]{}));
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Invalid filters were provided.");
-        }
+        query.select(root).where(predicates.toArray(new Predicate[]{}));
         List<T> entities = session.createQuery(query).list();
         logger.debug("Applicants retrieved: {}", entities);
         return entities;
