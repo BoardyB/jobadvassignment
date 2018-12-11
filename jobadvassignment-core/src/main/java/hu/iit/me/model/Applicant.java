@@ -14,9 +14,7 @@ public class Applicant extends PersistableEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     @Column
-    private String foreName;
-    @Column
-    private String surName;
+    private String fullName;
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
@@ -33,10 +31,8 @@ public class Applicant extends PersistableEntity {
     public Applicant() {
     }
 
-    public Applicant(String id, String foreName, String surName, LocalDate birthDate, String phoneNumber, String taxId, Gender gender, String address) {
-        this.id = id;
-        this.foreName = foreName;
-        this.surName = surName;
+    public Applicant(String fullName, LocalDate birthDate, String phoneNumber, String taxId, Gender gender, String address) {
+        this.fullName = fullName;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.taxId = taxId;
@@ -52,20 +48,12 @@ public class Applicant extends PersistableEntity {
         this.id = id;
     }
 
-    public String getForeName() {
-        return foreName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setForeName(String foreName) {
-        this.foreName = foreName;
-    }
-
-    public String getSurName() {
-        return surName;
-    }
-
-    public void setSurName(String surName) {
-        this.surName = surName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public LocalDate getBirthDate() {
@@ -112,8 +100,7 @@ public class Applicant extends PersistableEntity {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Applicant{");
         sb.append("id=").append(id).append('\'');
-        sb.append(", foreName='").append(foreName).append('\'');
-        sb.append(", surName='").append(surName).append('\'');
+        sb.append(", fullName='").append(fullName).append('\'');
         sb.append(", birthDate=").append(birthDate);
         sb.append(", phoneNumber='").append(phoneNumber).append('\'');
         sb.append(", taxId='").append(taxId).append('\'');
