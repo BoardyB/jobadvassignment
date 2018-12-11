@@ -1,7 +1,6 @@
 package hu.iit.me.dao;
 
 import com.google.common.reflect.TypeToken;
-import hu.iit.me.model.Applicant;
 import hu.iit.me.model.PersistableEntity;
 import hu.iit.me.util.filter.Filter;
 import org.hibernate.Session;
@@ -23,7 +22,8 @@ public class AbstractDAOImpl<T extends PersistableEntity> {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractDAOImpl.class);
 
-    private final TypeToken<T> type = new TypeToken<T>(getClass()) {};
+    private final TypeToken<T> type = new TypeToken<T>(getClass()) {
+    };
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -49,7 +49,7 @@ public class AbstractDAOImpl<T extends PersistableEntity> {
         List<Predicate> predicates = createPredicatesFromFilters(filters, criteriaBuilder, root);
         query.select(root).where(predicates.toArray(new Predicate[]{}));
         List<T> entities = session.createQuery(query).list();
-        logger.debug("Applicants retrieved: {}", entities);
+        logger.debug("Entities retrieved: {}", entities);
         return entities;
     }
 
@@ -66,7 +66,7 @@ public class AbstractDAOImpl<T extends PersistableEntity> {
         logger.debug("Saving entity to database {}", entity);
         Session session = this.sessionFactory.getCurrentSession();
         session.save(entity);
-        logger.debug("Applicant saved to database");
+        logger.debug("Entity saved to database");
     }
 
 }

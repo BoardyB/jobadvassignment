@@ -1,39 +1,25 @@
-package hu.iit.me.model;
+package hu.iit.me.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import hu.iit.me.exception.DTOConversionException;
+import hu.iit.me.model.Job;
+import hu.iit.me.model.JobType;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "Job")
-public class Job extends PersistableEntity {
+public class JobDTO {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
-    @Column
     private String name;
-    @Column
     private String description;
-    @Column
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate uploadDate;
-    @Column
+    private String uploadDate;
     private String companyName;
-    @Column
     private String contact;
-    @Column
     private Integer wage;
-    @Enumerated(EnumType.STRING)
-    @Column
-    private JobType type;
+    private String type;
 
-    public Job() {
+    public JobDTO() {
     }
 
-    public Job(String name, String description, LocalDate uploadDate, String companyName, String contact, Integer wage, JobType type) {
+    public JobDTO(String name, String description, String uploadDate, String companyName, String contact, Integer wage, String type) {
         this.name = name;
         this.description = description;
         this.uploadDate = uploadDate;
@@ -43,12 +29,26 @@ public class Job extends PersistableEntity {
         this.type = type;
     }
 
-    public String getId() {
-        return id;
+    public static JobDTO convertModelToDTO(Job job) {
+        JobDTO jobDTO = new JobDTO();
+        jobDTO.setName(job.getName());
+        jobDTO.setDescription(job.getDescription());
+        jobDTO.setUploadDate(job.getUploadDate().toString());
+        jobDTO.setCompanyName(job.getCompanyName());
+        jobDTO.setContact(job.getContact());
+        jobDTO.setWage(job.getWage());
+        jobDTO.setType(job.getType().toString());
+        return jobDTO;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Job toJob() {
+        try {
+            LocalDate uploadDate = LocalDate.now();
+            JobType jobType = JobType.valueOf(type);
+            return new Job(this.name, this.description, uploadDate, companyName, contact, wage, jobType);
+        } catch (Exception e) {
+            throw new DTOConversionException("Converting DTO to Job has failed, please provide valid property values", e);
+        }
     }
 
     public String getName() {
@@ -67,11 +67,11 @@ public class Job extends PersistableEntity {
         this.description = description;
     }
 
-    public LocalDate getUploadDate() {
+    public String getUploadDate() {
         return uploadDate;
     }
 
-    public void setUploadDate(LocalDate uploadDate) {
+    public void setUploadDate(String uploadDate) {
         this.uploadDate = uploadDate;
     }
 
@@ -99,25 +99,24 @@ public class Job extends PersistableEntity {
         this.wage = wage;
     }
 
-    public JobType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(JobType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Job{");
-        sb.append("id='").append(id).append('\'');
-        sb.append(", name='").append(name).append('\'');
+        final StringBuilder sb = new StringBuilder("JobDTO{");
+        sb.append("name='").append(name).append('\'');
         sb.append(", description='").append(description).append('\'');
-        sb.append(", uploadDate=").append(uploadDate);
+        sb.append(", uploadDate='").append(uploadDate).append('\'');
         sb.append(", companyName='").append(companyName).append('\'');
         sb.append(", contact='").append(contact).append('\'');
         sb.append(", wage=").append(wage);
-        sb.append(", type=").append(type);
+        sb.append(", type='").append(type).append('\'');
         sb.append('}');
         return sb.toString();
     }
