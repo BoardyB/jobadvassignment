@@ -2,13 +2,16 @@ package hu.iit.me.controller;
 
 import hu.iit.me.dto.ApplicantDTO;
 import hu.iit.me.exception.DTOConversionException;
+import hu.iit.me.exception.InvalidSearchFiltersException;
 import hu.iit.me.model.Applicant;
 import hu.iit.me.service.ApplicantService;
 import hu.iit.me.util.SearchRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -30,22 +33,24 @@ public class ApplicantController {
 
     @PostMapping(value = "/by")
     public ResponseEntity getApplicantsBy(@RequestBody SearchRequest request) {
-        try {
-            Collection<Applicant> applicants = this.applicantService.findBy(request);
-            return ResponseEntity.ok(applicants.stream().map(ApplicantDTO::convertModelToDTO).collect(toList()));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Search request filters are not valid." + request.toString());
-        }
+        Collection<Applicant> applicants = this.applicantService.findBy(request);
+        return ResponseEntity.ok(applicants.stream().map(ApplicantDTO::convertModelToDTO).collect(toList()));
+    }
+
+    @ExceptionHandler(InvalidSearchFiltersException.class)
+    public ResponseEntity invalidSearchFiltersExceptionHandler(InvalidSearchFiltersException e) {
+        return ResponseEntity.badRequest().body("Search request filters are not valid.\n" + e.getLocalizedMessage());
     }
 
     @PostMapping()
     public ResponseEntity save(@RequestBody ApplicantDTO applicant) {
-        try {
-            Applicant applicantModel = applicant.toApplicant();
-            this.applicantService.save(applicantModel);
-            return ResponseEntity.ok("Applicant saved successfully");
-        } catch (DTOConversionException e) {
-            return ResponseEntity.badRequest().body("Applicant fields are not valid.");
-        }
+        Applicant applicantModel = applicant.toApplicant();
+        this.applicantService.save(applicantModel);
+        return ResponseEntity.ok("Applicant saved successfully");
+    }
+
+    @ExceptionHandler(DTOConversionException.class)
+    public ResponseEntity dtoConversionExceptionHandler(DTOConversionException e) {
+        return ResponseEntity.badRequest().body("Applicant fields are not valid.");
     }
 }

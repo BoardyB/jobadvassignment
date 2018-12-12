@@ -2,6 +2,7 @@ package hu.iit.me.controller;
 
 import hu.iit.me.dto.JobDTO;
 import hu.iit.me.exception.DTOConversionException;
+import hu.iit.me.exception.InvalidSearchFiltersException;
 import hu.iit.me.model.Job;
 import hu.iit.me.service.JobService;
 import hu.iit.me.util.SearchRequest;
@@ -31,23 +32,25 @@ public class JobController {
 
     @PostMapping(value = "/by")
     public ResponseEntity getJobsBy(@RequestBody SearchRequest request) {
-        try {
-            Collection<Job> jobs = this.jobService.findBy(request);
-            return ResponseEntity.ok(jobs.stream().map(JobDTO::convertModelToDTO).collect(toList()));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Search request filters are not valid." + request.toString());
-        }
+        Collection<Job> jobs = this.jobService.findBy(request);
+        return ResponseEntity.ok(jobs.stream().map(JobDTO::convertModelToDTO).collect(toList()));
+    }
+
+    @ExceptionHandler(InvalidSearchFiltersException.class)
+    public ResponseEntity invalidSearchFiltersExceptionHandler(InvalidSearchFiltersException e) {
+        return ResponseEntity.badRequest().body("Search request filters are not valid.\n" + e.getLocalizedMessage());
     }
 
     @PostMapping()
     public ResponseEntity save(@RequestBody JobDTO job) {
-        try {
-            Job jobModel = job.toJob();
-            this.jobService.save(jobModel);
-            return ResponseEntity.ok("Job saved successfully");
-        } catch (DTOConversionException e) {
-            return ResponseEntity.badRequest().body("Job fields are not valid.");
-        }
+        Job jobModel = job.toJob();
+        this.jobService.save(jobModel);
+        return ResponseEntity.ok("Job saved successfully");
+    }
+
+    @ExceptionHandler(DTOConversionException.class)
+    public ResponseEntity dtoConversionExceptionHandler(DTOConversionException e) {
+        return ResponseEntity.badRequest().body("Job fields are not valid.");
     }
 
 }

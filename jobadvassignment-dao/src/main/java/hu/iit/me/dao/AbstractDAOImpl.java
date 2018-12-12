@@ -1,6 +1,7 @@
 package hu.iit.me.dao;
 
 import com.google.common.reflect.TypeToken;
+import hu.iit.me.exception.InvalidSearchFiltersException;
 import hu.iit.me.model.PersistableEntity;
 import hu.iit.me.util.filter.Filter;
 import org.hibernate.Session;
@@ -41,16 +42,20 @@ public class AbstractDAOImpl<T extends PersistableEntity> {
     @SuppressWarnings("unchecked")
     @Transactional
     public List<T> findBy(List<Filter> filters) {
-        logger.debug("Querying entities with matching filters: {}", filters);
-        Session session = this.sessionFactory.getCurrentSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<T> query = criteriaBuilder.createQuery((Class<T>) type.getRawType());
-        Root<T> root = query.from((Class<T>) type.getRawType());
-        List<Predicate> predicates = createPredicatesFromFilters(filters, criteriaBuilder, root);
-        query.select(root).where(predicates.toArray(new Predicate[]{}));
-        List<T> entities = session.createQuery(query).list();
-        logger.debug("Entities retrieved: {}", entities);
-        return entities;
+        try {
+            logger.debug("Querying entities with matching filters: {}", filters);
+            Session session = this.sessionFactory.getCurrentSession();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<T> query = criteriaBuilder.createQuery((Class<T>) type.getRawType());
+            Root<T> root = query.from((Class<T>) type.getRawType());
+            List<Predicate> predicates = createPredicatesFromFilters(filters, criteriaBuilder, root);
+            query.select(root).where(predicates.toArray(new Predicate[]{}));
+            List<T> entities = session.createQuery(query).list();
+            logger.debug("Entities retrieved: {}", entities);
+            return entities;
+        } catch (Exception e) {
+            throw new InvalidSearchFiltersException(e);
+        }
     }
 
     private List<Predicate> createPredicatesFromFilters(List<Filter> filters, CriteriaBuilder criteriaBuilder, Root<T> root) {
