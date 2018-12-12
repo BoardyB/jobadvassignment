@@ -1,6 +1,7 @@
 package hu.iit.me.controller;
 
 import hu.iit.me.dto.ApplicantDTO;
+import hu.iit.me.exception.DTOConversionException;
 import hu.iit.me.model.Applicant;
 import hu.iit.me.service.ApplicantService;
 import hu.iit.me.util.SearchRequest;
@@ -39,7 +40,12 @@ public class ApplicantController {
 
     @PostMapping()
     public ResponseEntity save(@RequestBody ApplicantDTO applicant) {
-        this.applicantService.save(applicant.toApplicant());
-        return ResponseEntity.ok("Applicant saved successfully");
+        try {
+            Applicant applicantModel = applicant.toApplicant();
+            this.applicantService.save(applicantModel);
+            return ResponseEntity.ok("Applicant saved successfully");
+        } catch (DTOConversionException e) {
+            return ResponseEntity.badRequest().body("Applicant fields are not valid.");
+        }
     }
 }

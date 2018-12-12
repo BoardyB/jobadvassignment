@@ -1,5 +1,6 @@
 package hu.iit.me.util.filter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -32,6 +33,7 @@ public abstract class Filter {
         this.fieldValue = fieldValue;
     }
 
+    @JsonIgnore
     public List<String> getValuesAsStringList() {
         if (fieldValue instanceof Collection) {
             List<String> valuesAsStrings = newArrayList();

@@ -1,6 +1,7 @@
 package hu.iit.me.controller;
 
 import hu.iit.me.dto.JobDTO;
+import hu.iit.me.exception.DTOConversionException;
 import hu.iit.me.model.Job;
 import hu.iit.me.service.JobService;
 import hu.iit.me.util.SearchRequest;
@@ -40,8 +41,13 @@ public class JobController {
 
     @PostMapping()
     public ResponseEntity save(@RequestBody JobDTO job) {
-        this.jobService.save(job.toJob());
-        return ResponseEntity.ok("Job saved successfully");
+        try {
+            Job jobModel = job.toJob();
+            this.jobService.save(jobModel);
+            return ResponseEntity.ok("Job saved successfully");
+        } catch (DTOConversionException e) {
+            return ResponseEntity.badRequest().body("Job fields are not valid.");
+        }
     }
 
 }
