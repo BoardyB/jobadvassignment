@@ -10,24 +10,16 @@ import java.time.LocalDate;
 public class Job extends PersistableEntity {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-    @Column
     private String name;
-    @Column
     private String description;
-    @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate uploadDate;
-    @Column
     private String companyName;
-    @Column
     private String contact;
-    @Column
     private Integer wage;
     @Enumerated(EnumType.STRING)
-    @Column
     private JobType type;
 
     public Job() {

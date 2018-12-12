@@ -10,22 +10,15 @@ import java.time.LocalDate;
 public class Applicant extends PersistableEntity {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-    @Column
     private String fullName;
-    @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
-    @Column
     private String phoneNumber;
-    @Column
     private String taxId;
     @Enumerated(EnumType.STRING)
-    @Column
     private Gender gender;
-    @Column
     private String address;
 
     public Applicant() {
