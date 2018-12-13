@@ -1,0 +1,379 @@
+{
+	"info": {
+		"_postman_id": "210e5837-ee2d-4910-88cc-f5cbfd3f0dc7",
+		"name": "jobadv-postman-collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Save applicant",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"disabled": false
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"foreName\": \"Ilona\",\n\t\"surName\": \"Kiss\",\n\t\"birthDate\": \"2018-11-23\",\n\t\"phoneNumber\": \"36205556478\",\n\t\"taxId\": \"123456791\",\n\t\"gender\": \"WOMAN\",\n\t\"address\": \"23. Random Str. Hungary\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/applicant/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"applicant",
+						""
+					]
+				},
+				"description": "Create example applicant."
+			},
+			"response": []
+		},
+		{
+			"name": "Save job",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Cleaner\",\n\t\"description\": \"We need someone to clean the office\",\n\t\"uploadDate\": \"2018-12-12\",\n\t\"companyName\": \"Cleaner Inc.\",\n\t\"contact\": \"someone@cleaner.io\",\n\t\"wage\": \"2000\",\n\t\"type\": \"CLEANER\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/job/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"job",
+						""
+					]
+				},
+				"description": "Save example job."
+			},
+			"response": []
+		},
+		{
+			"name": "Get all jobs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/job/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"job",
+						"all"
+					]
+				},
+				"description": "Query all jobs in database."
+			},
+			"response": []
+		},
+		{
+			"name": "Get all applicants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/applicant/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"applicant",
+						"all"
+					]
+				},
+				"description": "Query all applicants in database."
+			},
+			"response": []
+		},
+		{
+			"name": "Date filter for job.",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"fieldName\": \"uploadDate\",\n\t\t\t\"fieldValue\": {\n\t\t\t\t\"min\": \"2018-12-11\",\n\t\t\t\t\"max\": \"2018-12-13\"\n\t\t\t},\n\t\t\t\"type\": \"DATE\"\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/job/by",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"job",
+						"by"
+					]
+				},
+				"description": "Date filter for job."
+			},
+			"response": []
+		},
+		{
+			"name": "Number filter for job",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"fieldName\": \"wage\",\n\t\t\t\"fieldValue\": {\n\t\t\t\t\"min\": 1000,\n\t\t\t\t\"max\": 4000\n\t\t\t},\n\t\t\t\"type\": \"NUMBER\"\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/job/by",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"job",
+						"by"
+					]
+				},
+				"description": "Number filter for job."
+			},
+			"response": []
+		},
+		{
+			"name": "Exact match filter for applicant.",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"fieldName\": \"gender\",\n\t\t\t\"fieldValue\": \"MAN\",\n\t\t\t\"type\": \"EXACTMATCH\"\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/applicant/by",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"applicant",
+						"by"
+					]
+				},
+				"description": "Exact match filter for applicant."
+			},
+			"response": []
+		},
+		{
+			"name": "Partial match filter for applicant.",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"filters\": [\n\t\t{\n\t\t\t\"fieldName\": \"address\",\n\t\t\t\"fieldValue\": \"Hungary\",\n\t\t\t\"type\": \"PARTIALMATCH\"\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/applicant/by",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"applicant",
+						"by"
+					]
+				},
+				"description": "Partial match filter for applicant."
+			},
+			"response": []
+		},
+		{
+			"name": "Save example applicant 2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"foreName\": \"Béla\",\n\t\"surName\": \"Nagy\",\n\t\"birthDate\": \"2018-12-23\",\n\t\"phoneNumber\": \"36305783241\",\n\t\"taxId\": \"123456792\",\n\t\"gender\": \"MAN\",\n\t\"address\": \"11. Somewhere Str. Hungary\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/applicant/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"applicant",
+						""
+					]
+				},
+				"description": "Save example applicant 2"
+			},
+			"response": []
+		},
+		{
+			"name": "Save example applicant 3",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"foreName\": \"István\",\n\t\"surName\": \"Kiss\",\n\t\"birthDate\": \"2018-12-01\",\n\t\"phoneNumber\": \"36304869572\",\n\t\"taxId\": \"123456793\",\n\t\"gender\": \"MAN\",\n\t\"address\": \"666. Anywhere Str. Hungary\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/applicant/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"applicant",
+						""
+					]
+				},
+				"description": "Save example applicant 3"
+			},
+			"response": []
+		},
+		{
+			"name": "Save example job 2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Java Developer\",\n\t\"description\": \"We are in need of someone who can create pojos and stuff.\",\n\t\"uploadDate\": \"2018-12-10\",\n\t\"companyName\": \"Development Inc.\",\n\t\"contact\": \"someone@dev.io\",\n\t\"wage\": \"5000\",\n\t\"type\": \"DEVELOPER\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/job/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"job",
+						""
+					]
+				},
+				"description": "Save example job 2"
+			},
+			"response": []
+		},
+		{
+			"name": "Save example job 3",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Front-end Developer\",\n\t\"description\": \"We are in need of someone who can create fancy websites and stuff.\",\n\t\"uploadDate\": \"2018-12-09\",\n\t\"companyName\": \"Development Inc.\",\n\t\"contact\": \"someone@dev.io\",\n\t\"wage\": \"4000\",\n\t\"type\": \"DEVELOPER\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/job/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"job",
+						""
+					]
+				},
+				"description": "Save example job 3"
+			},
+			"response": []
+		}
+	]
+}
